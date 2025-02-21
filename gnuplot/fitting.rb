@@ -51,7 +51,7 @@ end
 
 a, b, c = solve_fit_equation(points)
 
-File.open('fitting.dat', 'w'){|f|
+open('fitting.dat', 'w'){|f|
   f.puts "# x y"
 
   points.each{|x, y|
