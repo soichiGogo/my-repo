@@ -27,7 +27,7 @@ plot_x_range[1] += 3
 plot_y_range[0] -= 3
 plot_y_range[1] += 3
   
-def solve_quadratic_fit(points)
+def solve_fit_equation(points)
   x1, y1 = points[0]
   x2, y2 = points[1]
   x3, y3 = points[2]
@@ -49,7 +49,7 @@ def solve_quadratic_fit(points)
   [a, b, c]
 end
 
-a, b, c = solve_quadratic_fit(points)
+a, b, c = solve_fit_equation(points)
 
 File.open('fitting.dat', 'w'){|f|
   f.puts "# x y"
