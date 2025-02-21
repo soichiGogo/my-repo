@@ -1,4 +1,4 @@
-filename = "kinmu_kitagawa2025_01Jan.txt"
+target_file_name = "kinmu_kitagawa2025_01Jan.txt"
 
 # 正規表現パターンの解説:
 # ^kinmu_       : ファイル名は "kinmu_" から始まる
@@ -9,11 +9,11 @@ filename = "kinmu_kitagawa2025_01Jan.txt"
 
 pattern = /^kinmu_([a-zA-Z]+)(\d{4}_\d{2})[A-Za-z]+\.txt$/
 
-match_data = filename.match(pattern)
+match_data = target_file_name.match(pattern)
 name   = match_data[1]
 date   = match_data[2]
 
-File.open(filename, "r"){|f|
+open(target_file_name, "r"){|f|
     total = 0
     f.each_line{ |line|
         next unless line.match(/^\d{1,2}\/\d{1,2}/)

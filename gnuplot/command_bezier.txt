@@ -1,0 +1,11 @@
+set terminal png
+set output 'bezier.png'
+set title 'BezierCurve'
+set xlabel 'x'
+set ylabel 'y'
+set xrange [-1:6]
+set yrange [-1:9]
+set grid
+set style line 1 lt 1 lw 2
+set style line 2 lt 2 lw 2
+plot 'bezier.dat' index 0 ls 1 with lines title 'BezierCurve', 'bezier.dat' index 1 ls 2 with points title 'ControlPoints'

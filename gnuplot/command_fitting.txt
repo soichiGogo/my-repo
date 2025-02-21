@@ -1,0 +1,11 @@
+set terminal png
+set output 'fitting.png'
+set title 'FittingCurve'
+set xlabel 'x'
+set ylabel 'y'
+set xrange [-3:5]
+set yrange [-1:9]
+set grid
+set style line 1 lt 1 lw 4
+set style line 2 lt 2 lw 2
+plot 'fitting.dat' index 0 ls 1 with points title 'OriginalData','fitting.dat' index 1 ls 2 with lines title 'FittingCurve'

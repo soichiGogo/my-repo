@@ -1,7 +1,6 @@
 points = 100
 step = Math::PI / points
-
-File.open('sincos.dat', 'w'){|f|
+open('sincos.dat', 'w'){|f|
   f.puts "# x sin(x) cos(x)"
   points.times{|i|
     x = i * step
@@ -11,19 +10,16 @@ File.open('sincos.dat', 'w'){|f|
   }
 }
 
-IO.popen("gnuplot -persist", "w"){|gp|
-  gp.puts <<~GNUPLOT
-    set terminal png
-    set output 'sincos.png'
-
-    set title "sincos"
-    set xlabel "theta[rad]"
-    set ylabel "Amplitude"
-
-    set grid
-    set xtics 0.314
-    set ytics 0.2
-
-    plot "sincos.dat" using 1:2 w lp linecolor rgb "red" title "sin","sincos.dat" using 1:3 w lp linecolor rgb "cyan" title "cos"
-  GNUPLOT
+open("command_sincos.txt", "w"){|f|
+  f.puts "set terminal png"
+  f.puts "set output 'sincos.png'"
+  f.puts "set title 'sincos'"
+  f.puts "set xlabel 'theta[rad]'"
+  f.puts "set ylabel 'Amplitude'"
+  f.puts "set grid"
+  f.puts "set xtics 0.314"
+  f.puts "set ytics 0.2"
+  f.puts "plot 'sincos.dat' using 1:2 w lp linecolor rgb 'red' title 'sin','sincos.dat' using 1:3 w lp linecolor rgb 'cyan' title 'cos'"
 }
+
+`gnuplot command_sincos.txt`

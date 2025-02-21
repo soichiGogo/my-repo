@@ -1,4 +1,4 @@
-File.open('sinc3d.dat', 'w'){|f|
+open('sinc3d.dat', 'w'){|f|
     f.puts "# x y z"
     50.times{|i|
         50.times{|j|
@@ -17,19 +17,18 @@ File.open('sinc3d.dat', 'w'){|f|
     }
 }
 
-IO.popen("gnuplot -persist", "w"){|gp|
-  gp.puts <<~GNUPLOT
-    set terminal png
-    set output 'sinc3d.png'
-    set title "sinc3d"
-    set xlabel "x"
-    set ylabel "y"
-    set zlabel "z"
-    set pm3d
-    set palette
-    set cntrparam levels 20
-    set cntrparam levels incremental -0.4,0.1,1
-    set ticslevel 0
-    splot "sinc3d.dat" using 1:2:3 with lines title "sinc3d"
-  GNUPLOT
+open("command_sinc3d.txt", "w"){|f|
+  f.puts "set terminal png"
+  f.puts "set output 'sinc3d.png'"
+  f.puts "set xlabel 'x'"
+  f.puts "set ylabel 'y'"
+  f.puts "set zlabel 'z'"
+  f.puts "set pm3d"
+  f.puts "set palette"
+  f.puts "set cntrparam levels 20"
+  f.puts "set cntrparam levels incremental -0.4,0.1,1"
+  f.puts "set ticslevel 0"
+  f.puts "splot 'sinc3d.dat' using 1:2:3 with lines title 'sinc'"
 }
+
+`gnuplot command_sinc3d.txt`

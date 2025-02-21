@@ -34,17 +34,15 @@ target_dirs = ["2020","2021"]
 data_with_year_and_month = {}#{"01"=>{"temp"=>[], "humi"=>[], "co2"=>[]}, "02"=>{"temp"=>[], "humi"=>[], "co2"=>[]}, ...}
 
 target_dirs.each{ |target_dir|
-    Dir.foreach(target_dir){ |file|
-        next unless File.extname(file).downcase == ".csv"
-        
-        File.open(File.join(target_dir, file), "r"){|f|
+    `ls #{target_dir}/*.csv`.split.each{ |file|
+        open(file, "r"){|f|
             f.each_line{ |line|
                 data = line.split(",")
                 next if 0 > data[1].to_f || data[1].to_f > 40
                 next if 0 > data[2].to_f || data[2].to_f > 100
                 next if 0 > data[3].to_i || data[3].to_i > 2000
 
-                month = file[0,2]
+                month = file[5,2]#2020/0108.csv -> 01
                 month_with_year = sprintf("%s%s", target_dir, month)
 
                 data_with_year_and_month[month_with_year] ||= { temp: [], humi: [], co2: [] }

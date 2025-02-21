@@ -69,45 +69,38 @@ File.open('fitting.dat', 'w'){|f|
 x_range = [points[0][0], points[2][0]]
 y_range = [points[0][1], points[2][1]]
 
-if points[1][0] < x_range[0]
-  x_range[0] = points[1][0]
-end
-if points[1][0] > x_range[1]
-  x_range[1] = points[1][0]
-end
-if points[2][0] < x_range[0]
-  x_range[0] = points[2][0]
-end
-if points[2][0] > x_range[1]
-  x_range[1] = points[2][0]
-end
-if points[0][1] < y_range[0]
-  y_range[0] = points[0][1]
-end
-if points[1][1] > y_range[1]
-  y_range[1] = points[1][1]
-end
-if points[2][1] < y_range[0]
-  y_range[0] = points[2][1]
-end
-if points[2][1] > y_range[1]
-  y_range[1] = points[2][1]
-end
+points.each{|x, y|
+  if x < x_range[0]
+    x_range[0] = x
+  end
+  if x > x_range[1]
+    x_range[1] = x
+  end
+  if y < y_range[0]
+    y_range[0] = y
+  end
+  if y > y_range[1]
+    y_range[1] = y
+  end
+}
 
 x_range[0] -= 3
 x_range[1] += 3
 y_range[0] -= 3
 y_range[1] += 3
 
-IO.popen("gnuplot -persist", "w"){|gp|
-  gp.puts <<~GNUPLOT
-    set terminal png
-    set output 'fitting.png'
-    set title "FittingCurve"
-    set xlabel "x"
-    set ylabel "y"
-    set xrange [#{x_range[0]}:#{x_range[1]}]
-    set yrange [#{y_range[0]}:#{y_range[1]}]
-    plot "fitting.dat" index 0 with points pt 7 title "OriginalData","fitting.dat" index 1 with lines title "FittingCurve"
-  GNUPLOT
+open("command_fitting.txt", "w"){|f|
+  f.puts "set terminal png"
+  f.puts "set output 'fitting.png'"
+  f.puts "set title 'FittingCurve'"
+  f.puts "set xlabel 'x'"
+  f.puts "set ylabel 'y'"
+  f.puts "set xrange [#{x_range[0]}:#{x_range[1]}]"
+  f.puts "set yrange [#{y_range[0]}:#{y_range[1]}]"
+  f.puts "set grid"
+  f.puts "set style line 1 lt 1 lw 4"
+  f.puts "set style line 2 lt 2 lw 2"
+  f.puts "plot 'fitting.dat' index 0 ls 1 with points title 'OriginalData','fitting.dat' index 1 ls 2 with lines title 'FittingCurve'"
 }
+
+`gnuplot command_fitting.txt`

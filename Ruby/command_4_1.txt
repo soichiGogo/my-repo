@@ -1,0 +1,11 @@
+set terminal png
+set output 'servomotor_4_1.png'
+set xlabel 'Time'
+set ylabel 'Angle (°)'
+set xrange [0:1]
+set yrange [0:180]
+set xtics 0.1
+set title 'Servo Motor Angle'
+set grid
+set style line 1 pointtype 4 pointsize 2
+plot 'protdata_4_1.txt' with lp ls 1 title 'graph'
